@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QLineEdit, QPushB
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
-from Img_create import create_dr
+from Img_create import StarDraw
 
 
 class App(QMainWindow):
@@ -10,7 +10,7 @@ class App(QMainWindow):
         super().__init__()
 
         self.setWindowTitle('Тест')
-        self.setGeometry(200, 200, 300, 300)
+        self.setGeometry(300, 200, 300, 300)
         self.label = QLabel(self)
 
     def load_image(self, file_name):
@@ -27,26 +27,38 @@ class WindowGif(QDialog):
         self.parent = parent
         self.initUI()
         self.setWindowTitle('Settings')
-        self.setGeometry(0, 200, 200, 100)
+        self.setGeometry(0, 200, 300, 100)
 
     def initUI(self):
         self.line_edit = QLineEdit(self)
-        self.line_edit.move(0, 5)
+        self.line_edit2 = QLineEdit(self)
+        self.line_edit3 = QLineEdit(self)
         self.btn = QPushButton('go', self)
+        self.labelstp = QLabel('STEP', self)
+        self.labelx = QLabel('SET X', self)
+        self.labely = QLabel('SET Y', self)
         self.initUi()
 
     def initUi(self):
-        self.btn.move(125, 0)
+        self.line_edit.move(50, 5)
+        self.line_edit2.move(50, 30)
+        self.line_edit3.move(50, 55)
+        self.labelstp.move(0, 5)
+        self.labelx.move(0, 30)
+        self.labely.move(0, 55)
+        self.btn.move(175, 0)
         self.btn.resize(self.btn.sizeHint())
         self.btn.clicked.connect(self.run)
 
     def run(self):
         try:
-            create_dr(1000, int(self.line_edit.text()))
+            sr.set_stp(int(self.line_edit.text()))
+            sr.set_x(int(self.line_edit2.text()))
+            sr.set_y(int(self.line_edit3.text()))
+            sr.create_dr()
             ex.load_image('image.jpg')
             ex.show()
         except ValueError as ve:
-            create_dr(1000, 20)
             ex.load_image('image.jpg')
             ex.show()
 
@@ -56,8 +68,9 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
 
     ex = App()
+    sr = StarDraw((1000, 1000), 20)
+    sr.create_dr()
     ep = WindowGif()
-    create_dr(1000, 20)
     ex.load_image('image.jpg')
     ex.show()
     ep.show()
