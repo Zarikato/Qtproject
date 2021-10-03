@@ -27,34 +27,56 @@ class WindowGif(QDialog):
         self.parent = parent
         self.initUI()
         self.setWindowTitle('Settings')
-        self.setGeometry(0, 200, 300, 100)
+        self.setGeometry(0, 200, 300, 200)
 
     def initUI(self):
         self.line_edit = QLineEdit(self)
         self.line_edit2 = QLineEdit(self)
         self.line_edit3 = QLineEdit(self)
+
+        self.line_editcolorR = QLineEdit(self)
+        self.line_editcolorG = QLineEdit(self)
+        self.line_editcolorB = QLineEdit(self)
+
         self.btn = QPushButton('go', self)
         self.labelstp = QLabel('STEP', self)
         self.labelx = QLabel('SET X', self)
         self.labely = QLabel('SET Y', self)
+        self.labelcolor = QLabel('SET Color', self)
         self.initUi()
 
     def initUi(self):
         self.line_edit.move(50, 5)
         self.line_edit2.move(50, 30)
+        self.line_edit2.setText('1000')
         self.line_edit3.move(50, 55)
+        self.line_edit3.setText('1000')
+        
+        self.line_editcolorR.move(60, 80)
+        self.line_editcolorR.resize(50,20)
+        self.line_editcolorG.move(110, 80)
+        self.line_editcolorG.resize(50, 20)
+        self.line_editcolorB.move(160 , 80)
+        self.line_editcolorB.resize(50, 20)
+        
         self.labelstp.move(0, 5)
         self.labelx.move(0, 30)
         self.labely.move(0, 55)
+        self.labelcolor.move(0, 80)
+
         self.btn.move(175, 0)
         self.btn.resize(self.btn.sizeHint())
         self.btn.clicked.connect(self.run)
 
     def run(self):
         try:
+            rn = int(self.line_editcolorR.text())
+            gn = int(self.line_editcolorG.text())
+            bn = int(self.line_editcolorB.text())
             sr.set_stp(int(self.line_edit.text()))
             sr.set_x(int(self.line_edit2.text()))
             sr.set_y(int(self.line_edit3.text()))
+            sr.set_color((rn, gn, bn))
             sr.create_dr()
             ex.load_image('image.jpg')
             ex.show()
