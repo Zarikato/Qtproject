@@ -36,4 +36,6 @@ class StarDraw():
             drawer.line((x // 2, i, x // 2 - i, y // 2), fill=colore, width=1) # II
             drawer.line((x // 2, y - i, x // 2 + i, y // 2), fill=colore, width=1) # III
             drawer.line((x // 2, y - i, x // 2 - i, y // 2), fill=colore, width=1) # IV
+            drawer.line((0, y // 2, x, y // 2), fill=colore, width=1) # X0
+            drawer.line((x // 2, 0, x // 2, y), fill=colore, width=1) # Y0
         im.save('image.jpg')
